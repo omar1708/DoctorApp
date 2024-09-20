@@ -15,9 +15,8 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'layout', 
-    component: LayoutComponent, 
-    pathMatch: 'full'
+    path: 'layout', // layout/dasboard, layout/especialidades
+    loadChildren: () => import('./compartido/compartido.module').then(m => m.CompartidoModule) 
   },
   {
     path: '**', 
