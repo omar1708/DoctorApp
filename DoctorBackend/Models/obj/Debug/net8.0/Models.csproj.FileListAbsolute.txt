@@ -5,6 +5,7 @@ C:\Proyectos\DoctorApp\DoctorBackend\Models\obj\Debug\net8.0\Models.GeneratedMSB
 C:\Proyectos\DoctorApp\DoctorBackend\Models\obj\Debug\net8.0\Models.AssemblyInfoInputs.cache
 C:\Proyectos\DoctorApp\DoctorBackend\Models\obj\Debug\net8.0\Models.AssemblyInfo.cs
 C:\Proyectos\DoctorApp\DoctorBackend\Models\obj\Debug\net8.0\Models.csproj.CoreCompileInputs.cache
+C:\Proyectos\DoctorApp\DoctorBackend\Models\obj\Debug\net8.0\Models.sourcelink.json
 C:\Proyectos\DoctorApp\DoctorBackend\Models\obj\Debug\net8.0\Models.dll
 C:\Proyectos\DoctorApp\DoctorBackend\Models\obj\Debug\net8.0\refint\Models.dll
 C:\Proyectos\DoctorApp\DoctorBackend\Models\obj\Debug\net8.0\Models.pdb
