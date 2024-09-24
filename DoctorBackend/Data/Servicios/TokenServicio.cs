@@ -22,7 +22,7 @@ namespace Data.Servicios
             this._config = config;
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
-        public string CrearToken(Usuario usuario)
+        public string CrearToken(UsuarioAplicacion usuario)
         {
             var claims = new List<Claim>
             {

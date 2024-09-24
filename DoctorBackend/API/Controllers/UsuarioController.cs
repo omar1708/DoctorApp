@@ -2,6 +2,7 @@
 using Data.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
@@ -13,31 +14,31 @@ namespace API.Controllers
 {
     public class UsuarioController : BaseApiController
     {
-        private readonly ApplicationDbContext _db;
+        private readonly UserManager<UsuarioAplicacion> _userManager;
         private readonly ITokenServicio _tokenServicio;
 
-        public UsuarioController(ApplicationDbContext db, ITokenServicio tokenServicio)
+        public UsuarioController(UserManager<UsuarioAplicacion> userManager, ITokenServicio tokenServicio)
         {
-            this._db = db;
+            _userManager = userManager;
             this._tokenServicio = tokenServicio;
         }
 
-        [Authorize]
-        [HttpGet]//api/usuario
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
-        {
-            var usuarios = await _db.Usuarios.ToListAsync();
-            return Ok(usuarios);
-        }
+        //[Authorize]
+        //[HttpGet]//api/usuario
+        //public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        //{
+        //    var usuarios = await _db.Usuarios.ToListAsync();
+        //    return Ok(usuarios);
+        //}
 
-        [Authorize]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
-        {
-            var usuario = await _db.Usuarios.FindAsync(id);
-            return Ok(usuario);
+        //[Authorize]
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        //{
+        //    var usuario = await _db.Usuarios.FindAsync(id);
+        //    return Ok(usuario);
 
-        }
+        //}
 
         [HttpPost("registro")]
         public async Task<ActionResult<UsuarioDto>> Registro(RegistroDto registroDto)
@@ -47,15 +48,16 @@ namespace API.Controllers
                 return BadRequest("UserName ya esta registrado.");
             }
 
-            using var hmac = new HMACSHA512();
-            var usuario = new Usuario
+            var usuario = new UsuarioAplicacion
             {
                 UserName = registroDto.Username.ToLower(),
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registroDto.Password)),
-                PasswordSalt = hmac.Key
             };
-            _db.Usuarios.Add(usuario);
-            await _db.SaveChangesAsync();
+            
+            var resultado = await _userManager.CreateAsync(usuario, registroDto.Password);
+            if (!resultado.Succeeded)
+            {
+                return BadRequest(resultado.Errors);
+            }
 
             return new UsuarioDto
             {
@@ -66,25 +68,23 @@ namespace API.Controllers
 
         private async Task<bool> UsuarioExiste(string username)
         {
-            return await _db.Usuarios.AnyAsync(x => x.UserName == username.ToLower());
+            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<UsuarioDto>> Login(LoginDto loginDto)
         {
-            var usuario = await _db.Usuarios.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
+            var usuario = await _userManager.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
             if (usuario == null) 
             {
                 return Unauthorized("Usuario no valido");  
             }
-            using var hmac = new HMACSHA512(usuario.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-
-            for (int i = 0; i < computedHash.Length; i++)
+            
+            var resultado = await _userManager.CheckPasswordAsync(usuario, loginDto.Password);
+            if (!resultado)
             {
-                if (computedHash[i] != usuario.PasswordHash[i])
-                    return Unauthorized("Passord no valid");
-            }
+                return Unauthorized("Password no valido");
+            };
 
             return new UsuarioDto
             {

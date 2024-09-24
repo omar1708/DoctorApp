@@ -103,6 +103,7 @@ namespace BLL.Servicios
                 }
 
                 _unidadTrabajo.Medico.Remover(medicoDb);
+                await _unidadTrabajo.Guardar();
             }
             catch (Exception)
             {

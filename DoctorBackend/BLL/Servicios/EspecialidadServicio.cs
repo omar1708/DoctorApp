@@ -108,6 +108,7 @@ namespace BLL.Servicios
                 }
 
                 _unidadTrabajo.Especialidad.Remover(especialidadDb);
+                await _unidadTrabajo.Guardar();
             }
             catch (Exception)
             {
