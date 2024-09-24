@@ -138,6 +138,74 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "API.Controllers.EspecialidadController",
+    "Method": "GetActivos",
+    "RelativePath": "api/Especialidad/ListadoActivos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.MedicoController",
+    "Method": "Get",
+    "RelativePath": "api/Medico",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.MedicoController",
+    "Method": "Crear",
+    "RelativePath": "api/Medico",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modeloDto",
+        "Type": "Models.DTOs.MedicoDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.MedicoController",
+    "Method": "Editar",
+    "RelativePath": "api/Medico",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "modeloDto",
+        "Type": "Models.DTOs.MedicoDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.MedicoController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Medico/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "API.Controllers.UsuarioController",
     "Method": "GetUsuarios",
     "RelativePath": "api/Usuario",

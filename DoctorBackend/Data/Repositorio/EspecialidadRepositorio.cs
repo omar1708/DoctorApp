@@ -8,24 +8,28 @@ using System.Threading.Tasks;
 
 namespace Data.Repositorio
 {
-    internal class EspecialidadRepositorio : Repositorio<Especialidad>, IEspecialidadRepositorio
+    internal class MedicoRepositorio : Repositorio<Medico>, IMedicoRepositorio
     {
         private readonly ApplicationDbContext _db;
 
-        public EspecialidadRepositorio(ApplicationDbContext db): base(db) 
+        public MedicoRepositorio(ApplicationDbContext db): base(db) 
         {
             _db = db;
         }
 
-        public void Actualizar(Especialidad especialidad)
+        public void Actualizar(Medico medico)
         {
-            var especialidadDb = _db.Especialidades.FirstOrDefault(e => e.Id == especialidad.Id);
-            if (especialidadDb != null) 
+            var medicoDb = _db.Medicos.FirstOrDefault(e => e.Id == medico.Id);
+            if (medicoDb != null) 
             {
-                especialidadDb.NombreEspecialidad = especialidad.NombreEspecialidad;
-                especialidadDb.Descripcion = especialidad.Descripcion;
-                especialidadDb.Estado = especialidad.Estado;
-                especialidadDb.FechaActualizacion = DateTime.Now;
+                medicoDb.Appelidos = medico.Appelidos;
+                medicoDb.Nombres = medico.Nombres;
+                medicoDb.Estado = medico.Estado;
+                medicoDb.Telefono = medico.Telefono;
+                medicoDb.Genero = medico.Genero;
+                medicoDb.Especialidad = medico.Especialidad;
+                medicoDb.Direccion = medico?.Direccion;
+                medicoDb.FechaActualizacion = DateTime.Now;
                 _db.SaveChanges();
             }
         }

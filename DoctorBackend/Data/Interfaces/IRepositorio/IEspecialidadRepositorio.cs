@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces.IRepositorio
 {
-    public interface IEspecialidadRepositorio: IRepositorioGenerico<Especialidad>
+    public interface IMedicoRepositorio: IRepositorioGenerico<Medico>
     {
-        void Actualizar(Especialidad especialidad);
+        void Actualizar(Medico medico);
     }
 }
