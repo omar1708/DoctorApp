@@ -15,7 +15,7 @@ namespace Models.DTOs
 
         [Required(ErrorMessage = "Apellidos es requerido")]
         [StringLength(60, MinimumLength = 1, ErrorMessage = "Apellidos debe ser minimo de 1 y maximo de 60 caracteres")]
-        public string Appelidos { get; set; }
+        public string Apellidos { get; set; }
 
         [Required(ErrorMessage = "Nombres es requerido")]
         [StringLength(60, MinimumLength = 1, ErrorMessage = "Nombres debe ser minimo de 1 y maximo de 60 caracteres")]
@@ -25,7 +25,7 @@ namespace Models.DTOs
         [StringLength(100, MinimumLength = 1, ErrorMessage = "Direccion debe ser minimo de 1 y maximo de 100 caracteres")]
         public string Direccion { get; set; }
 
-        [StringLength(40, MinimumLength = 1, ErrorMessage = "Direccion debe ser minimo de 1 y maximo de 40 caracteres")]
+        [MaxLength(40)]
         public string Telefono { get; set; }
 
         [Required(ErrorMessage = "Genero es Requerido")]

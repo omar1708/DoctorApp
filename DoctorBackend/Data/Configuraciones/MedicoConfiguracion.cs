@@ -14,7 +14,7 @@ namespace Data.Configuraciones
         public void Configure(EntityTypeBuilder<Medico> builder)
         {
             builder.Property(x => x.Id).IsRequired();
-            builder.Property(x => x.Appelidos).IsRequired().HasMaxLength(60);
+            builder.Property(x => x.Apellidos).IsRequired().HasMaxLength(60);
             builder.Property(x => x.Nombres).IsRequired().HasMaxLength(60);
             builder.Property(x => x.Direccion).IsRequired().HasMaxLength(100);
             builder.Property(x => x.Telefono).IsRequired(false).HasMaxLength(40);

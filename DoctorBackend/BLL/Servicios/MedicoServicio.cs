@@ -32,7 +32,7 @@ namespace BLL.Servicios
                     throw new TaskCanceledException("El medico no existe");
                 }
 
-                medicodDb.Appelidos = modeloDto.Appelidos;
+                medicodDb.Apellidos = modeloDto.Apellidos;
                 medicodDb.Nombres = modeloDto.Nombres;
                 medicodDb.Telefono = modeloDto.Telefono;
                 medicodDb.Direccion = modeloDto.Direccion;
@@ -54,7 +54,7 @@ namespace BLL.Servicios
             {
                 Medico medico = new Medico
                 {
-                    Appelidos = modeloDto.Appelidos,
+                    Apellidos = modeloDto.Apellidos,
                     Nombres = modeloDto.Nombres,
                     Telefono = modeloDto.Telefono,
                     Genero = modeloDto.Genero,
@@ -83,7 +83,7 @@ namespace BLL.Servicios
         {
             try
             {
-                var lista = await _unidadTrabajo.Medico.ObtenerTodos(incluirPropiedades: "Especialidad", orderBy: e => e.OrderBy(e => e.Appelidos));
+                var lista = await _unidadTrabajo.Medico.ObtenerTodos(incluirPropiedades: "Especialidad", orderBy: e => e.OrderBy(e => e.Apellidos));
                 return _mapper.Map<IEnumerable<MedicoDto>>(lista);
             }
             catch (Exception)

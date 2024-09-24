@@ -22,7 +22,7 @@ namespace Data.Repositorio
             var medicoDb = _db.Medicos.FirstOrDefault(e => e.Id == medico.Id);
             if (medicoDb != null) 
             {
-                medicoDb.Appelidos = medico.Appelidos;
+                medicoDb.Apellidos = medico.Apellidos;
                 medicoDb.Nombres = medico.Nombres;
                 medicoDb.Estado = medico.Estado;
                 medicoDb.Telefono = medico.Telefono;
