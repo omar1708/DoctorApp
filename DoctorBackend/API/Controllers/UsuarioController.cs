@@ -16,11 +16,15 @@ namespace API.Controllers
     {
         private readonly UserManager<UsuarioAplicacion> _userManager;
         private readonly ITokenServicio _tokenServicio;
+        private ApiResponse _response;
+        private readonly RoleManager<RolAplicacion> _rolManager;
 
-        public UsuarioController(UserManager<UsuarioAplicacion> userManager, ITokenServicio tokenServicio)
+        public UsuarioController(UserManager<UsuarioAplicacion> userManager, ITokenServicio tokenServicio, RoleManager<RolAplicacion> rolManager)
         {
             _userManager = userManager;
             this._tokenServicio = tokenServicio;
+            _response = new();
+            _rolManager = rolManager;
         }
 
         //[Authorize]
@@ -40,6 +44,7 @@ namespace API.Controllers
 
         //}
 
+        [Authorize(Policy = "AdminRol")]
         [HttpPost("registro")]
         public async Task<ActionResult<UsuarioDto>> Registro(RegistroDto registroDto)
         {
@@ -51,6 +56,9 @@ namespace API.Controllers
             var usuario = new UsuarioAplicacion
             {
                 UserName = registroDto.Username.ToLower(),
+                Email = registroDto.Email.ToLower(),
+                Apellidos = registroDto.Apellidos,
+                Nombres = registroDto.Nombres,
             };
             
             var resultado = await _userManager.CreateAsync(usuario, registroDto.Password);
@@ -59,10 +67,13 @@ namespace API.Controllers
                 return BadRequest(resultado.Errors);
             }
 
+            var rolResultado = await _userManager.AddToRoleAsync(usuario, registroDto.Rol);
+            if (!rolResultado.Succeeded) return BadRequest("Error al agregar el rol al usuario");
+
             return new UsuarioDto
             {
                 Username = usuario.UserName,
-                Token = _tokenServicio.CrearToken(usuario)
+                Token = await _tokenServicio.CrearToken(usuario)
             };
         }
 
@@ -89,8 +100,20 @@ namespace API.Controllers
             return new UsuarioDto
             {
                 Username = usuario.UserName,
-                Token = _tokenServicio.CrearToken(usuario)
+                Token = await _tokenServicio.CrearToken(usuario)
             };
+        }
+
+        [Authorize(Policy = "AdminRol")]
+        [HttpGet("ListadoRoles")]
+        public IActionResult GetRoles()
+        {
+            var roles = _rolManager.Roles.Select(r => new { NombreRol = r.Name}).ToList();
+            _response.Resultado = roles;
+            _response.IsExitosa = true;
+            _response.StatusCode = System.Net.HttpStatusCode.OK;
+
+            return Ok(_response);
         }
 
     }
