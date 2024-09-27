@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiResponse } from 'src/app/interfaces/api-response';
 import { environment } from 'src/environments/environment';
 import { Especialidad } from '../interfaces/especialidad';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +13,14 @@ export class EspecialidadService {
 
   baseUrl: string = environment.apiUrl + 'especialidad/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   lista(): Observable<ApiResponse>{
-    return this.http.get<ApiResponse>(`${this.baseUrl}`)
+    return this.http.get<ApiResponse>(`${this.baseUrl}`);
   }
 
   listaActivos(): Observable<ApiResponse>{
-    return this.http.get<ApiResponse>(`${this.baseUrl}listadoActivos`)
+    return this.http.get<ApiResponse>(`${this.baseUrl}listadoActivos`);
   }
 
   crear(request: Especialidad): Observable<ApiResponse>{
