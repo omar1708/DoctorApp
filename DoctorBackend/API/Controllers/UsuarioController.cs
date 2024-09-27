@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models.DTOs;
 using Models.Entidades;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -27,13 +28,26 @@ namespace API.Controllers
             _rolManager = rolManager;
         }
 
-        //[Authorize]
-        //[HttpGet]//api/usuario
-        //public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
-        //{
-        //    var usuarios = await _db.Usuarios.ToListAsync();
-        //    return Ok(usuarios);
-        //}
+        [Authorize(Policy = "AdminRol")]
+        [HttpGet]//api/usuario
+        public async Task<ActionResult> GetUsuarios()
+        {
+            var usuarios = await _userManager.Users.Select(u => new UsuarioListaDto()
+            {
+                Username = u.UserName,
+                Apellidos = u.Apellidos,
+                Nombres = u.Nombres,
+                Email = u.Email,
+                Rol = String.Join(",", _userManager.GetRolesAsync(u).Result.ToArray())
+
+            }).ToListAsync();
+
+            _response.Resultado = usuarios;
+            _response.IsExitosa = true;
+            _response.StatusCode = HttpStatusCode.OK;
+
+            return Ok(_response);
+        }
 
         //[Authorize]
         //[HttpGet("{id}")]

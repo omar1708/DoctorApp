@@ -207,6 +207,16 @@
   },
   {
     "ContainingType": "API.Controllers.UsuarioController",
+    "Method": "GetUsuarios",
+    "RelativePath": "api/Usuario",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "API.Controllers.UsuarioController",
     "Method": "GetRoles",
     "RelativePath": "api/Usuario/ListadoRoles",
     "HttpMethod": "GET",
