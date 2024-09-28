@@ -20,10 +20,12 @@ namespace Data
         }
 
         public DbSet<UsuarioAplicacion> UsuarioAplicacion { get; set; }
-
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
         public DbSet<Medico> Medicos { get; set; }
+        public DbSet<Paciente> Pacientes { get; set; }
+        public DbSet<HistoriaClinica> HistoriaClinicas { get; set; }
+        public DbSet<Antecedente> Antecedentes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
