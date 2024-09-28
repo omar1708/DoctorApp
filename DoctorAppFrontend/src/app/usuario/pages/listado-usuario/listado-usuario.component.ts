@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UsuarioService } from '../../servicios/usuario.service';
 import { CompartidoService } from 'src/app/compartido/compartido.service';
 import { Usuario } from '../../interfaces/usuario';
+import { ModalUsuarioComponent } from '../../modales/modal-usuario/modal-usuario.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-listado-usuario',
@@ -26,7 +28,8 @@ export class ListadoUsuarioComponent implements OnInit, AfterViewInit{
 
   constructor(
     private _usuarioServicio: UsuarioService,
-    private _compartidoServicio: CompartidoService
+    private _compartidoServicio: CompartidoService,
+    private dialog: MatDialog
   ){
 
   }
@@ -48,7 +51,12 @@ export class ListadoUsuarioComponent implements OnInit, AfterViewInit{
   }
 
   nuevoUsuario(){
-
+    this.dialog
+    .open(ModalUsuarioComponent, {disableClose: true, width: '600px'})
+    .afterClosed()
+    .subscribe((resultado) => {
+      if(resultado === 'true') this.obtenerUsuarios();
+    });
   }
 
   aplicarFiltroListado(event: Event){
